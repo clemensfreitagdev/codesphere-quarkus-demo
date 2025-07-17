@@ -1,0 +1,20 @@
+schemaVersion: v0.2
+prepare:
+  steps:
+    - name: install quarkus
+      command: nix-env -iA nixpkgs.jdk nixpkgs.quarkus
+test:
+  steps: []
+run:
+  app:
+    steps:
+      - name: check env
+        command: printenv
+      - name: run
+        command: cd ./code-with-quarkus && ./mvnw quarkus:dev
+    plan: 8
+    replicas: 1
+    isPublic: true
+    network:
+      path: /
+      stripPath: false
